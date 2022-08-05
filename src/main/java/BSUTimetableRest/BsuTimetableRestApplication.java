@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BsuTimetableRestApplication {
 
 	public static void main(String[] args) {
+		System.out.println("v1.1");
 		SpringApplication.run(BsuTimetableRestApplication.class, args);
 	}
 

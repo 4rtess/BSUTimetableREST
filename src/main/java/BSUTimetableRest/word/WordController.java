@@ -186,8 +186,8 @@ public class WordController {
                     LessonInfo lessonInfo = LessonInfo.builder()
                             .lessonName(lesInfo[0])
                             .lessonType(lesInfo[1])
-                            .lessonPeriod(lesInfo[2])
-                            .lessonLecturer(lesInfo[3])
+                            .lessonLecturer(lesInfo[2])
+                            .lessonPeriod(lesInfo[3])
                             .lessonPlace(lesInfo[4])
                             .build();
 
@@ -196,7 +196,7 @@ public class WordController {
             }
 
             Lesson lesson = Lesson.builder()
-                    .lessonTime(timeFirst)
+                    .lessonTime(timeFirst.replace(";",""))
                     .lessonNumber(lessonNum)
                     .lessonInfo(lessonInfos)
                     .build();
@@ -229,21 +229,22 @@ public class WordController {
 
                     lessonInfos.add(lessonInfo);
                 }
-                if(lesInfo.length==5) {
+                if(lesInfo.length>=5) {
                     LessonInfo lessonInfo = LessonInfo.builder()
                             .lessonName(lesInfo[0])
                             .lessonType(lesInfo[1])
-                            .lessonPeriod(lesInfo[2])
-                            .lessonLecturer(lesInfo[3])
+                            .lessonLecturer(lesInfo[2])
+                            .lessonPeriod(lesInfo[3])
                             .lessonPlace(lesInfo[4])
                             .build();
 
+
                     lessonInfos.add(lessonInfo);
-                };
+                }
             }
 
             Lesson lesson = Lesson.builder()
-                    .lessonTime(timeFirst)
+                    .lessonTime(timeFirst.replace(";",""))
                     .lessonNumber(lessonNum)
                     .lessonInfo(lessonInfos)
                     .build();

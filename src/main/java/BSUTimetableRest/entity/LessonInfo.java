@@ -20,7 +20,7 @@ public class LessonInfo {
 
     private String lessonName;
     private String lessonType;
-    private String lessonPeriod;
     private String lessonLecturer;
+    private String lessonPeriod;
     private String lessonPlace;
 }
