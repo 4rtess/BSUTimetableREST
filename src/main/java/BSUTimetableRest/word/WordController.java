@@ -61,6 +61,7 @@ public class WordController {
 
     private List<GroupTimetable> parseGroupTimetables(XWPFTable table) {
         fillWidthByNumAndSecondHoursNum(table);
+        Map<String, String> abbreviation = getAbbreviation();
         List<GroupTimetable> groupTimetables = new ArrayList<>();
 
         List<Day> days = parseDays(table);
@@ -72,10 +73,8 @@ public class WordController {
             for(int j = i; j < days.size(); j+=headerNames.size()) {
                 daysForGroupTimetables.add(days.get(j));
             }
-            GroupTimetable groupTimetable = GroupTimetable.builder()
-                    .groupName(headerNames.get(i).replace(";",""))
-                    .days(daysForGroupTimetables)
-                    .build();
+            GroupTimetable groupTimetable = new GroupTimetable(headerNames.get(i).replace(";",""),
+                    daysForGroupTimetables, abbreviation);
             groupTimetables.add(groupTimetable);
         }
 
@@ -335,6 +334,36 @@ public class WordController {
         daysOfWeek.add("четверг;");
         daysOfWeek.add("пятница;");
         daysOfWeek.add("суббота;");
+    }
+
+    private Map<String,String> getAbbreviation() {
+        Map<String, String> abbr = new HashMap<>();
+        try {
+            XWPFDocument document = new XWPFDocument(new FileInputStream("abbreviation.docx"));
+            XWPFTable abbrTable = document.getTables().get(0);
+            for(int i = 1; i < abbrTable.getRows().size();i++) {
+                XWPFTableRow row = abbrTable.getRow(i);
+                List<String> cells = new ArrayList<>();
+                for(XWPFTableCell cell : row.getTableCells()) {
+                    String text = cell.getText();
+                    if(!text.isEmpty() && !text.replaceAll("\\d","").isEmpty())
+                        cells.add(text);
+                }
+
+                for(int j = 0; j < cells.size()-1; j+=2) {
+                    abbr.put(cells.get(j).toUpperCase(), firstUpperCase(cells.get(j+1)));
+                }
+            }
+
+
+        } catch (Exception e) {e.printStackTrace();}
+
+        return abbr;
+    }
+
+    public String firstUpperCase(String word){
+        if(word == null || word.isEmpty()) return "";
+        return word.substring(0, 1).toUpperCase() + word.substring(1);
     }
 
 }
